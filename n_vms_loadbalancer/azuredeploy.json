@@ -147,6 +147,28 @@
         }
       }
     },
+	{
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+      "name": "[concat('/', variables('lbName'), '/','ssh-vm', copyIndex())]",
+      "location": "[resourceGroup().location]",
+      "copy": {
+        "name": "lbNatLoop",
+        "count": "[parameters('numberOfInstances')]"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/loadBalancers/', variables('lbName'))]"
+      ],
+      "properties": {
+        "frontendIPConfiguration": {
+          "id": "[variables('lbFrontEndIpConfigID')]"
+        },
+        "protocol": "tcp",
+        "frontendPort": "[copyIndex(5001)]",
+        "backendPort": 22,
+        "enableFloatingIP": false
+      }
+    },
     {
       "apiVersion": "2015-05-01-preview",
       "name": "[variables('lbName')]",
@@ -169,32 +191,6 @@
         "backendAddressPools": [
           {
             "name": "BackendPool1"
-          }
-        ],
-        "inboundNatRules": [
-          {
-            "name": "RDP-VM0",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[variables('lbFrontEndIpConfigID')]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 50001,
-              "backendPort": 3389,
-              "enableFloatingIP": false
-            }
-          },
-          {
-            "name": "RDP-VM1",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[variables('lbFrontEndIpConfigID')]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 50002,
-              "backendPort": 3389,
-              "enableFloatingIP": false
-            }
           }
         ],
         "loadBalancingRules": [
@@ -242,7 +238,8 @@
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
-        "[concat('Microsoft.Network/loadBalancers/', variables('lbName'))]"
+        "[concat('Microsoft.Network/loadBalancers/', variables('lbName'))]",
+		"[concat('Microsoft.Network/loadBalancers/', variables('lbName'), '/inboundNatRules/', 'ssh-vm', copyIndex())]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -260,7 +257,7 @@
               ],
               "loadBalancerInboundNatRules": [
                 {
-                  "id": "[concat(variables('lbID'),'/inboundNatRules/RDP-VM', copyindex())]"
+                  "id": "[concat(variables('lbID'),'/inboundNatRules/ssh-vm', copyindex())]"
                 }
               ]
             }

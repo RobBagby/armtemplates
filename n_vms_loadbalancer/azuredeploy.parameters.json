@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "vmPrefix": {
-      "value": "bagbytest2"
+      "value": "bagbytest"
     },
 	"imagePublisher": {
       "value": "Canonical"
@@ -30,7 +30,7 @@
 	  "value": 2
 	},
 	"newStorageAccountName": {
-      "value": "bagbyteststg2"
+      "value": "bagbyteststg"
     }
   }
 }
