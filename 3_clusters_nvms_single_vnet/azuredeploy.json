@@ -115,6 +115,9 @@
       "apiVersion": "2015-01-01",
       "name": "linkedTemplateForNode",
       "type": "Microsoft.Resources/deployments",
+	  "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
+      ],
       "properties": {
         "mode": "incremental",
         "templateLink": {
@@ -143,6 +146,9 @@
       "apiVersion": "2015-01-01",
       "name": "linkedTemplateForController",
       "type": "Microsoft.Resources/deployments",
+	  "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
+      ],
       "properties": {
         "mode": "incremental",
         "templateLink": {
@@ -171,6 +177,9 @@
       "apiVersion": "2015-01-01",
       "name": "linkedTemplateForDtr",
       "type": "Microsoft.Resources/deployments",
+	  "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
+      ],
       "properties": {
         "mode": "incremental",
         "templateLink": {

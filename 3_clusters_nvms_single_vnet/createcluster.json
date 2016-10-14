@@ -259,7 +259,6 @@
         "count": "[parameters('numberOfInstances')]"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
         "[concat('Microsoft.Network/loadBalancers/', variables('lbName'))]",
 		"[concat('Microsoft.Network/loadBalancers/', variables('lbName'), '/inboundNatRules/', 'ssh-vm', copyIndex())]"
       ],
