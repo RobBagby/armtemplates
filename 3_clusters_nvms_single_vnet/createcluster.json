@@ -87,8 +87,6 @@
       }
   },
   "variables": {
-    
-    "vnetAddressPrefix": "10.0.0.0/8",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
     "subnetName": "WebSubnet",
     "subnet1Prefix": "10.0.1.0/24",

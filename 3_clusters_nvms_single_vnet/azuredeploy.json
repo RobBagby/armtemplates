@@ -83,6 +83,7 @@
   },
   "variables": {
 	"virtualNetworkName": "[concat(parameters('vmPrefix'), 'vnet')]",
+	"vnetAddressPrefix": "10.0.0.0/8"
   },
   "resources": [
     {
