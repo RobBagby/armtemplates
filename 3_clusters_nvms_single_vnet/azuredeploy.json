@@ -83,7 +83,8 @@
   },
   "variables": {
 	"virtualNetworkName": "[concat(parameters('vmPrefix'), 'vnet')]",
-	"vnetAddressPrefix": "10.0.0.0/8"
+	"vnetAddressPrefix": "10.0.0.0/8",
+	"subnetName": "clustersubnet"
   },
   "resources": [
     {
@@ -131,7 +132,8 @@
 			"location":{"value": "[parameters('location')]"},
 			"numberOfInstances":{"value": "[parameters('numberOfInstances')]"},
 			"newStorageAccountName":{"value": "[parameters('newStorageAccountName')]"}, 
-			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"} 
+			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}, 
+			"subnetName":{"value": "[variables('subnetName')]"} 
         } 
       }
     },
@@ -157,7 +159,8 @@
 			"location":{"value": "[parameters('location')]"},
 			"numberOfInstances":{"value": "[parameters('numberOfInstances')]"},
 			"newStorageAccountName":{"value": "[parameters('newStorageAccountName')]"}, 
-			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"} 
+			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}, 
+			"subnetName":{"value": "[variables('subnetName')]"} 
         } 
       }
     },
@@ -183,7 +186,8 @@
 			"location":{"value": "[parameters('location')]"},
 			"numberOfInstances":{"value": "[parameters('numberOfInstances')]"},
 			"newStorageAccountName":{"value": "[parameters('newStorageAccountName')]"}, 
-			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}  
+			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}, 
+			"subnetName":{"value": "[variables('subnetName')]"} 
         } 
       }
     }

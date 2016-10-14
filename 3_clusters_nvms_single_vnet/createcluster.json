@@ -83,14 +83,18 @@
 	"virtualNetworkName": {
       "type": "string",
       "metadata": {
+        "description": "The name of the vnet created in the calling template."
+      },
+	"subnetName": {
+      "type": "string",
+      "metadata": {
         "description": "The name of the subnet created in the calling template."
       }
   },
   "variables": {
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
-    "subnetName": "WebSubnet",
     "subnet1Prefix": "10.0.1.0/24",
-    "subnetId": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+    "subnetId": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]",
     "vhdContainerName": "vhds",
     "vhdStorageAccountName": "bagbyimages",
     "pipName": "[concat(parameters('vmPrefix'),'Pip')]",
