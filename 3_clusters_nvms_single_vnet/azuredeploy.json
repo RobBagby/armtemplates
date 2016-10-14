@@ -1,0 +1,190 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Prefix for the VM name and other items.  Ucp, Controller and Dtr nodes will prefix this with 'node', 'ctrl' and 'dtr'"
+      }
+    },
+	"imagePublisher": {
+      "type": "string",
+      "defaultValue": "Canonical",
+      "metadata": {
+        "description": "Image Publisher"
+      }
+    },
+    "imageOffer": {
+      "type": "string",
+      "defaultValue": "UbuntuServer",
+      "metadata": {
+        "description": "Image Offer"
+      }
+    },
+    "imageSKU": {
+      "type": "string",
+      "defaultValue": "16.04.0-LTS",
+      "metadata": {
+        "description": "Image SKU"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_DS1",
+      "metadata": {
+        "description": "Size of the VM"
+      }
+    },
+	"dataDiskSize": {
+      "type": "int",
+      "defaultValue": 300,
+      "metadata": {
+        "description": "Size of the Data Disks in GB"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "VMAdmin",
+      "metadata": {
+        "description": "Admin user name"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "South Central US",
+      "allowedValues": [
+        "West US",
+		"South Central US"
+      ],
+      "metadata": {
+        "description": "Location where to create the resources"
+      }
+    },
+	"numberOfInstances": {
+      "type": "int",
+      "defaultValue": "3",
+      "metadata": {
+        "description": "Number of VMs to create"
+      }
+    },
+	"newStorageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Unique DNS Name for the Storage Account where the Virtual Machine's disks will be placed."
+      }
+    }
+  },
+  "variables": {
+	"virtualNetworkName": "[concat(parameters('vmPrefix'), 'vnet')]",
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetworkName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [ ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('subnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('subnet1Prefix')]"
+            }
+
+          }
+        ]
+      }
+    },
+	{
+      "apiVersion": "2015-01-01",
+      "name": "linkedTemplateForNode",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/RobBagby/armtemplates/master/3_clusters_nvms_single_vnet/createcluster.json",
+          "contentVersion": "1.0.0.0"
+        },
+		"parameters": { 
+			"vmPrefix":{"value": "[concat('node', parameters('vmPrefix'))]"},
+			"imagePublisher":{"value": "[parameters('imagePublisher')]"},
+			"imageOffer":{"value": "[parameters('imageOffer')]"},
+			"imageSKU":{"value": "[parameters('imageSKU')]"},
+			"vmSize":{"value": "[parameters('vmSize')]"},
+			"dataDiskSize":{"value": "[parameters('dataDiskSize')]"},
+			"adminUsername":{"value": "[parameters('adminUsername')]"},
+			"adminPassword":{"value": "[parameters('adminPassword')]"},
+			"location":{"value": "[parameters('location')]"},
+			"numberOfInstances":{"value": "[parameters('numberOfInstances')]"},
+			"newStorageAccountName":{"value": "[parameters('newStorageAccountName')]"}, 
+			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"} 
+        } 
+      }
+    },
+	{
+      "apiVersion": "2015-01-01",
+      "name": "linkedTemplateForController",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/RobBagby/armtemplates/master/3_clusters_nvms_single_vnet/createcluster.json",
+          "contentVersion": "1.0.0.0"
+        },
+		"parameters": { 
+			"vmPrefix":{"value": "[concat('ctrl', parameters('vmPrefix'))]"},
+			"imagePublisher":{"value": "[parameters('imagePublisher')]"},
+			"imageOffer":{"value": "[parameters('imageOffer')]"},
+			"imageSKU":{"value": "[parameters('imageSKU')]"},
+			"vmSize":{"value": "[parameters('vmSize')]"},
+			"dataDiskSize":{"value": "[parameters('dataDiskSize')]"},
+			"adminUsername":{"value": "[parameters('adminUsername')]"},
+			"adminPassword":{"value": "[parameters('adminPassword')]"},
+			"location":{"value": "[parameters('location')]"},
+			"numberOfInstances":{"value": "[parameters('numberOfInstances')]"},
+			"newStorageAccountName":{"value": "[parameters('newStorageAccountName')]"}, 
+			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"} 
+        } 
+      }
+    },
+	{
+      "apiVersion": "2015-01-01",
+      "name": "linkedTemplateForDtr",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/RobBagby/armtemplates/master/3_clusters_nvms_single_vnet/createcluster.json",
+          "contentVersion": "1.0.0.0"
+        },
+		"parameters": { 
+			"vmPrefix":{"value": "[concat('dtr', parameters('vmPrefix'))]"},
+			"imagePublisher":{"value": "[parameters('imagePublisher')]"},
+			"imageOffer":{"value": "[parameters('imageOffer')]"},
+			"imageSKU":{"value": "[parameters('imageSKU')]"},
+			"vmSize":{"value": "[parameters('vmSize')]"},
+			"dataDiskSize":{"value": "[parameters('dataDiskSize')]"},
+			"adminUsername":{"value": "[parameters('adminUsername')]"},
+			"adminPassword":{"value": "[parameters('adminPassword')]"},
+			"location":{"value": "[parameters('location')]"},
+			"numberOfInstances":{"value": "[parameters('numberOfInstances')]"},
+			"newStorageAccountName":{"value": "[parameters('newStorageAccountName')]"}, 
+			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}  
+        } 
+      }
+    }
+  ]
+}
