@@ -93,7 +93,6 @@
   },
   "variables": {
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
-    "subnet1Prefix": "10.0.1.0/24",
     "subnetId": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]",
     "vhdContainerName": "vhds",
     "vhdStorageAccountName": "bagbyimages",
