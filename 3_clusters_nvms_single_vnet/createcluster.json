@@ -84,11 +84,13 @@
       "type": "string",
       "metadata": {
         "description": "The name of the vnet created in the calling template."
+		}
       },
 	"subnetName": {
       "type": "string",
       "metadata": {
         "description": "The name of the subnet created in the calling template."
+		}
       }
   },
   "variables": {

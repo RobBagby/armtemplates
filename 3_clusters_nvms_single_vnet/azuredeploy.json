@@ -133,8 +133,9 @@
 			"location":{"value": "[parameters('location')]"},
 			"numberOfInstances":{"value": "[parameters('numberOfInstances')]"},
 			"newStorageAccountName":{"value": "[parameters('newStorageAccountName')]"}, 
-			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}, 
-			"subnetName":{"value": "[variables('subnetName')]"} 
+			"subnetName":{"value": "[variables('subnetName')]"},
+			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}
+			 
         } 
       }
     },
@@ -160,8 +161,9 @@
 			"location":{"value": "[parameters('location')]"},
 			"numberOfInstances":{"value": "[parameters('numberOfInstances')]"},
 			"newStorageAccountName":{"value": "[parameters('newStorageAccountName')]"}, 
-			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}, 
-			"subnetName":{"value": "[variables('subnetName')]"} 
+			"subnetName":{"value": "[variables('subnetName')]"},
+			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}
+			
         } 
       }
     },
@@ -187,8 +189,9 @@
 			"location":{"value": "[parameters('location')]"},
 			"numberOfInstances":{"value": "[parameters('numberOfInstances')]"},
 			"newStorageAccountName":{"value": "[parameters('newStorageAccountName')]"}, 
-			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}, 
-			"subnetName":{"value": "[variables('subnetName')]"} 
+			"subnetName":{"value": "[variables('subnetName')]"} ,
+			"virtualNetworkName":{"value": "[variables('virtualNetworkName')]"}
+			
         } 
       }
     }
